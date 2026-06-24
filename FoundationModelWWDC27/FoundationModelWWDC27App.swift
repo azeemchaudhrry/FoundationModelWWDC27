@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct FoundationModelWWDC27App: App {
+    private let extractor: TagExtracting
+
+    init() {
+        self.extractor = TagExtractorFactory.makeDefault()
+    }
+
+    init(extractor: TagExtracting) {
+        self.extractor = extractor
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(extractor: extractor)
         }
     }
 }
