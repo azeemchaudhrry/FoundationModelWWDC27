@@ -41,6 +41,19 @@ struct ContentView: View {
                 Text("Tag Extraction")
                     .font(.title2.weight(.semibold))
 
+                HStack(spacing: 8) {
+                    Text(viewModel.modelAvailabilityMessage)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    Spacer()
+
+                    Button("Check Model") {
+                        viewModel.refreshModelAvailability()
+                    }
+                    .buttonStyle(.bordered)
+                }
+
                 TextEditor(text: $viewModel.inputText)
                     .frame(height: 150)
                     .padding(8)
@@ -121,6 +134,9 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding()
             .navigationTitle("Foundation Model")
+            .onAppear {
+                viewModel.refreshModelAvailability()
+            }
         }
     }
 

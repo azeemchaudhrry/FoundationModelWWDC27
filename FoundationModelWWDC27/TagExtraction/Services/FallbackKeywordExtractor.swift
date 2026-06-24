@@ -1,6 +1,9 @@
 import Foundation
+import os
 
 public struct FallbackKeywordExtractor: TagExtracting, Sendable {
+    private static let logger = Logger(subsystem: "dev.azeem.FoundationModelWWDC27", category: "FallbackExtractor")
+
     private let normalizer: TagNormalizer
 
     public init(normalizer: TagNormalizer = TagNormalizer()) {
@@ -10,15 +13,22 @@ public struct FallbackKeywordExtractor: TagExtracting, Sendable {
     public func extractTags(from request: TagExtractionRequest) async throws -> TagExtractionResult {
         let text = request.text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else {
+            Self.logger.error("Rejected fallback extraction due to empty input")
             throw TagExtractionError.invalidInput
         }
 
+        Self.logger.debug("Running fallback extraction")
         let candidateTokens = tokenize(text)
+        Self.logger.debug("Fallback tokenizer produced \(candidateTokens.count) candidates")
+
         let tags = normalizer.normalize(candidateTokens, config: request.config)
 
         guard !tags.isEmpty else {
+            Self.logger.warning("Fallback extraction produced no quality tags")
             throw TagExtractionError.emptyResult
         }
+
+        Self.logger.debug("Fallback extraction returning \(tags.count) tags")
 
         return TagExtractionResult(tags: tags, source: .fallback)
     }
