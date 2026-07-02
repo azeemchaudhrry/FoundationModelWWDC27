@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "6CDC588A-D8E2-45C1-BC2D-59CE7D645FA8"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AB51FC93-CC40-4466-B278-576CEEC3077D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FoundationModelWWDC27/TagExtraction/Infrastructure/AppleOnDeviceLanguageModelClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "generateTagCandidates(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AB51FC93-CC40-4466-B278-576CEEC3077D - ae34c3f1d46cc874"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (FoundationModelWWDC27.GeneratedTagItem) -&gt; FoundationModelWWDC27.OnDeviceModelTagCandidate in FoundationModelWWDC27.AppleOnDeviceLanguageModelClient.generateTagCandidates(for: Swift.String) async throws -&gt; Swift.Array&lt;FoundationModelWWDC27.OnDeviceModelTagCandidate&gt;"
+                  moduleName = "FoundationModelWWDC27.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hazeem/dev/experiment/WWDC26/FoundationModelWWDC27/FoundationModelWWDC27/TagExtraction/Infrastructure/AppleOnDeviceLanguageModelClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86">
+               </Location>
+               <Location
+                  uuid = "AB51FC93-CC40-4466-B278-576CEEC3077D - 750906cc7faeb1a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for FoundationModelWWDC27.AppleOnDeviceLanguageModelClient.generateTagCandidates(for: Swift.String) async throws -&gt; Swift.Array&lt;FoundationModelWWDC27.OnDeviceModelTagCandidate&gt;"
+                  moduleName = "FoundationModelWWDC27.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hazeem/dev/experiment/WWDC26/FoundationModelWWDC27/FoundationModelWWDC27/TagExtraction/Infrastructure/AppleOnDeviceLanguageModelClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4A84C497-9A8F-41C7-9113-F9660E8C127E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FoundationModelWWDC27/TagExtraction/Infrastructure/AppleOnDeviceLanguageModelClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "generateTagCandidates(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

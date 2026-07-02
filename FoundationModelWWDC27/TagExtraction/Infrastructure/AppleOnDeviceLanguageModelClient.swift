@@ -71,7 +71,7 @@ public struct AppleOnDeviceLanguageModelClient: OnDeviceLanguageModelClient, Sen
         if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
             Self.logger.debug("Starting on-device tag generation")
             let session = LanguageModelSession(
-                model: SystemLanguageModel.default,
+                model: SystemLanguageModel(useCase: .contentTagging, guardrails: .default),
                 instructions: instructions
             )
             session.prewarm()
@@ -82,9 +82,11 @@ public struct AppleOnDeviceLanguageModelClient: OnDeviceLanguageModelClient, Sen
                 generating: GeneratedTagList.self,
                 options: options
             )
+
             let mapped = response.content.tags.map {
                 OnDeviceModelTagCandidate(value: $0.value, confidence: nil)
             }
+
             Self.logger.debug("On-device generation completed with \(mapped.count) candidates")
             return mapped
         }

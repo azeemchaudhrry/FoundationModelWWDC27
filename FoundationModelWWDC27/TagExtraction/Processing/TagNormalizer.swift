@@ -2,7 +2,7 @@ import Foundation
 
 public struct TagNormalizer: Sendable {
     private let blockedTerms: Set<String> = [
-        "tag", "tags", "keyword", "keywords", "text", "content", "article", "topic", "topics", "none", "n/a", "na"
+        "tag", "tags", "keyword", "keywords", "text", "content", "topic", "topics", "none", "n/a", "na"
     ]
 
     public init() {}
