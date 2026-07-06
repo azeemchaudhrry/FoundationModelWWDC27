@@ -2,6 +2,14 @@ import Foundation
 import Combine
 import os
 
+struct BatchQueryResult: Identifiable, Sendable {
+    let id = UUID()
+    let query: String
+    let tags: [String]
+    let source: String
+    let error: String?
+}
+
 @MainActor
 final class TagExtractionViewModel: ObservableObject {
     private static let logger = Logger(subsystem: "dev.azeem.FoundationModelWWDC27", category: "TagExtractionViewModel")
@@ -11,6 +19,8 @@ final class TagExtractionViewModel: ObservableObject {
     @Published var statusMessage: String = ""
     @Published var modelAvailabilityMessage: String = "Checking model availability..."
     @Published var isLoading: Bool = false
+    @Published var batchResults: [BatchQueryResult] = []
+    @Published var isBatchRunning: Bool = false
 
     private let extractor: TagExtracting
 
@@ -56,6 +66,40 @@ final class TagExtractionViewModel: ObservableObject {
             statusMessage = error.localizedDescription
             Self.logger.error("Extraction failed with error: \(error.localizedDescription, privacy: .public)")
         }
+    }
+
+    func runBatchAnalysis(queries: [String], maxTagCount: Int = 8) async {
+        isBatchRunning = true
+        defer { isBatchRunning = false }
+
+        batchResults = []
+        Self.logger.notice("Batch analysis started for \(queries.count) queries")
+
+        for (index, query) in queries.enumerated() {
+            let request = TagExtractionRequest(
+                text: query,
+                config: TagExtractionConfig(maxTagCount: maxTagCount)
+            )
+
+            do {
+                let result = try await extractor.extractTags(from: request)
+                batchResults.append(
+                    BatchQueryResult(query: query, tags: result.values, source: result.source.rawValue, error: nil)
+                )
+                Self.logger.notice(
+                    "Batch [\(index + 1)/\(queries.count)] query=\"\(query, privacy: .public)\" source=\(result.source.rawValue, privacy: .public) tags=\(result.values, privacy: .public)"
+                )
+            } catch {
+                batchResults.append(
+                    BatchQueryResult(query: query, tags: [], source: "error", error: error.localizedDescription)
+                )
+                Self.logger.error(
+                    "Batch [\(index + 1)/\(queries.count)] query=\"\(query, privacy: .public)\" failed: \(error.localizedDescription, privacy: .public)"
+                )
+            }
+        }
+
+        Self.logger.notice("Batch analysis completed for \(queries.count) queries")
     }
 
     private func humanReadableAvailabilityReason(_ reason: String) -> String {

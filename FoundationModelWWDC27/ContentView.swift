@@ -101,6 +101,54 @@ struct ContentView: View {
                     }
                 }
 
+                HStack {
+                    Button("Run All Samples") {
+                        Task {
+                            await viewModel.runBatchAnalysis(queries: quickInjectSamples)
+                        }
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(viewModel.isBatchRunning)
+
+                    if viewModel.isBatchRunning {
+                        ProgressView()
+                        Text("Running \(viewModel.batchResults.count)/\(quickInjectSamples.count)")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    } else if !viewModel.batchResults.isEmpty {
+                        Text("Completed \(viewModel.batchResults.count) queries — see logs for full model plans")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+
+                if !viewModel.batchResults.isEmpty {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(viewModel.batchResults) { entry in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(entry.query)
+                                        .font(.caption.weight(.semibold))
+                                    if let error = entry.error {
+                                        Text("Error: \(error)")
+                                            .font(.caption2)
+                                            .foregroundStyle(.red)
+                                    } else {
+                                        Text("[\(entry.source)] \(entry.tags.joined(separator: ", "))")
+                                            .font(.caption2)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .padding(8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Color.gray.opacity(0.08))
+                                .clipShape(RoundedRectangle(cornerRadius: 6))
+                            }
+                        }
+                    }
+                    .frame(maxHeight: 200)
+                }
+
                 if !copyStatus.isEmpty {
                     Text(copyStatus)
                         .font(.footnote)
